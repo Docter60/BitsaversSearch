@@ -1,7 +1,32 @@
 #include "MyApp.h"
 
-#define WINDOW_WIDTH  600
-#define WINDOW_HEIGHT 400
+#include <string>
+
+#define WINDOW_WIDTH  960
+#define WINDOW_HEIGHT 725
+
+JSValueRef OnDownloadButtonClick(JSContextRef ctx, JSObjectRef function,
+  JSObjectRef thisObject, size_t argumentCount, 
+  const JSValueRef arguments[], JSValueRef* exception) {
+  JSStringRef sr = JSValueToStringCopy(ctx, arguments[0], exception);
+  size_t maxBufferSize = JSStringGetMaximumUTF8CStringSize(sr);
+  char* buffer = new char[maxBufferSize];
+  size_t bytesWritten = JSStringGetUTF8CString(sr, buffer, maxBufferSize);
+  std::string s(buffer, bytesWritten);
+  std::string command;
+  #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
+  command = "start " + s;
+  #elif __APPLE__
+  command = "open " + s;
+  #elif __linux__
+  command = "xdg-open " + s;
+  #else
+  #error "Unknown compiler"
+  #endif
+  std::system(command.c_str());
+
+  return JSValueMakeNull(ctx);
+}
 
 MyApp::MyApp() {
   ///
@@ -15,7 +40,6 @@ MyApp::MyApp() {
   ///
   window_ = Window::Create(app_->main_monitor(), WINDOW_WIDTH, WINDOW_HEIGHT,
     false, kWindowFlags_Titled | kWindowFlags_Resizable);
-
   ///
   /// Create our HTML overlay-- we don't care about its initial size and
   /// position because it'll be calculated when we call OnResize() below.
@@ -103,6 +127,29 @@ void MyApp::OnDOMReady(ultralight::View* caller,
   ///
   /// This is the best time to setup any JavaScript bindings.
   ///
+  // Acquire the JS execution context for the current page.
+  auto scoped_context = caller->LockJSContext();
+  
+  // Typecast to the underlying JSContextRef.
+  JSContextRef ctx = (*scoped_context);
+  
+  // Create a JavaScript String containing the name of our callback.
+  JSStringRef name = JSStringCreateWithUTF8CString("dl");
+
+  // Create a garbage-collected JavaScript function that is bound to our
+  // native C callback 'OnDownloadButtonClick()'.
+  JSObjectRef func = JSObjectMakeFunctionWithCallback(ctx, name, 
+                                                      OnDownloadButtonClick);
+  
+  // Get the global JavaScript object (aka 'window')
+  JSObjectRef globalObj = JSContextGetGlobalObject(ctx);
+
+  // Store our function in the page's global JavaScript object so that it
+  // accessible from the page as 'OnDownloadButtonClick()'.
+  JSObjectSetProperty(ctx, globalObj, name, func, 0, 0);
+
+  // Release the JavaScript String we created earlier.
+  JSStringRelease(name);
 }
 
 void MyApp::OnChangeCursor(ultralight::View* caller,

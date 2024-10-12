@@ -1,13 +1,50 @@
-<html>
-  <head>
-    <title>MyApp -- (edit this title in app.html)</title>
-    <style>
-    body {
-      font-family: -apple-system, 'Segoe UI Light', Ubuntu, Arial, sans-serif;
-    }
-    </style>
-  </head>
-  <body>
-    <h1>Hello World!</h1>
-  </body>
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bitsavers Search</title>
+    <link rel="stylesheet" href="bootstrap.min.css" />
+    <link rel="stylesheet" href="datatables.min.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-page="/Index">Bitsavers Search</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+          <table id="bitsaversSearchTable" class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Filename</th>
+                    <th scope="col">Section</th>
+                    <th scope="col">Path</th>
+                    <th scope="col">Download</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2024 - Docter60
+        </div>
+    </footer>
+
+    <script src="jquery.min.js"></script>
+    <script src="bootstrap.bundle.min.js"></script>
+    <script src="datatables.min.js"></script>
+    <script src="BitsaversSearch.js"></script>
+</body>
 </html>
