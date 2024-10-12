@@ -1,34 +1,27 @@
-# ultralight-quick-start
+# BitsaversSearch
 
-__Clone this repo to try a simple Ultralight app!__
+## Acknowledgements
+This project is using the [Ultralight](https://ultralig.ht/) HTML renderer and their [quick start repository](https://github.com/ultralight-ux/ultralight-quick-start).
+Additional dependencies include:
+- [jsoncpp](https://github.com/open-source-parsers/jsoncpp)
+- [asio](https://github.com/chriskohlhoff/asio) (non-boost)
 
-This is a minimal Ultralight app you can use with the [Writing Your First App](https://docs.ultralig.ht/docs/writing-your-first-app) article in the Ultralight documentation.
+## Features
+- Keyword search in path and filename
+- Download links are provided and open in your default browser
+- Updates occur once the last update is over a day old
+- Updates can be forced by deleting the LastUpdated.txt or the assets/data.json file
 
-## 1. Install the Prerequisites
-
-Before you build and run, you'll need to [install the prerequisites](https://docs.ultralig.ht/docs/installing-prerequisites) for your platform.
-
-## 2. Clone and build the app
-
-To clone the repo and build, run the following:
-
+## Building BitsaversSearch
 ```shell
-git clone https://github.com/ultralight-ux/ultralight-quick-start
-cd ultralight-quick-start
+git clone https://github.com/Docter60/BitsaversSearch
+cd BitsaversSearch
+git submodule init
+git submodule update
 cmake -B build
 cmake --build build --config Release
 ```
 
-## 3. Run the app
+## Running BitsaversSearch
 
-### On macOS and Linux
-
-Navigate to `ultralight-quick-start/build` and run `MyApp` to launch the program.
-
-### On Windows
-
-Navigate to `ultralight-quick-start/build/Release` and run `MyApp` to launch the program.
-
-## Further Reading
-
-Follow the [Writing Your First App](https://docs.ultralig.ht/docs/writing-your-first-app) guide and other tutorials in the documentation for more info.
+Navigate to the executable's directory and run 'BitsaversSearch' to launch the program.
