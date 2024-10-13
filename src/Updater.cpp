@@ -155,6 +155,7 @@ namespace BitsaversSearch
 
     void Updater::Update()
     {
+        std::cout << "Updating..." << std::endl;
         std::ofstream outFile(DATA_JSON_FILEPATH);
         if (!outFile.is_open())
         {
